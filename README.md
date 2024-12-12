@@ -1,6 +1,6 @@
-# QR Scanner Web
+# QR File Sharing
 
-QR Scanner Web is a simple web application for uploading files, generating unique QR codes, and sharing download links. It includes automatic file cleanup for old files and supports manual file deletion via API.
+QR File Sharing is a simple web application for uploading files, generating unique QR codes, and sharing download links. It includes automatic file cleanup for old files and supports manual file deletion via API.
 
 ## Features
 
