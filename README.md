@@ -43,7 +43,7 @@ QR Scanner Web/
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/qr-scanner-web.git
+    git clone https://github.com/ahansardar/QR-File-Sharing.git
     cd qr-scanner-web
     ```
 
