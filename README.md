@@ -105,11 +105,15 @@ Request:
 DELETE request with the filename in the URL.
 Response:
 JSON confirming whether the file was deleted successfully or not.
-How it Works
+
+## How it Works
 File Upload: Users upload a file using the /upload endpoint, and the file is saved to the static/uploads directory. A unique QR code is generated for the file's download link.
 QR Code Generation: When a file is uploaded, a QR code is created that links to the file's download URL.
+
 File Cleanup: The background scheduler automatically runs the cleanup every day, deleting files older than 7 days.
+
 Manual Cleanup: You can manually trigger the cleanup by sending a POST request to /cleanup.
+
 File Deletion: Files can be deleted by sending a DELETE request to /delete/<filename>.
 
 ## License
