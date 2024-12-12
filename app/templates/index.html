@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR File Sharing - Share with Ease</title>
+	<link rel="icon" href="/static/favicon.png" type="image/png"> <!-- Change the path to your icon -->
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+	 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+	 
+</head>
+    <style>
+        body {
+            background-color: #f8f9fa;
+			  font-family: 'Source Sans Pro', sans-serif;
+            position: relative;
+            min-height: 100vh;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+		.navbar-brand {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;  /* Semi-bold for emphasis */
+}
+.btn, .dropdown-item {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;  /* Regular weight for better readability */
+}
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        #dropArea {
+            border: 2px dashed #6c757d;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            background-color: #ffffff;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        #dropArea.dragover {
+            background-color: #d1e7dd;
+            border-color: #0d6efd;
+        }
+        .hidden {
+            display: none;
+        }
+        .footer {
+            background-color: #0d6efd;
+            color: #ffffff;
+            padding: 10px 0;
+        }
+		.manual-icon {
+    width: 32px;  /* Adjust width */
+    height: auto;  /* Maintain aspect ratio */
+    margin-right: 10px; /* Space between the icon and title */
+}
+        /* Spinner Styles - Centered */
+        #spinner {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        /* Notification Styles - Top-left */
+        #notification {
+            display: none;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1050;
+            min-width: 200px;
+        }
+		  /* Custom styling for the instruction pane */
+        .instruction-pane {
+            display: none;  /* Hidden by default */
+            animation: fadeIn 0.5s ease-in-out; /* Fade-in effect */
+        }
+
+        /* Styling for each instruction item */
+        .instruction-item {
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 5px solid #007bff;
+            transition: transform 0.3s ease;
+        }
+
+        .instruction-item:hover {
+            transform: translateX(10px); /* Subtle animation on hover */
+        }
+
+        .instruction-item i {
+            color: #007bff;
+        }
+		.instructions-text {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+        /* Custom animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <!-- Icon beside the title -->
+        <a class="navbar-brand" href="#">
+            <img src="/static/app.png" class="manual-icon" alt="QR File Sharing"> <!-- Image icon for manual -->
+            QR File Sharing
+        </a>
+          
+        <!-- Instruction Dropdown -->
+        <div class="dropdown">
+            <button class="btn btn-outline-light dropdown-toggle" type="button" id="instructionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-info-circle"></i> Instructions
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="instructionDropdown">
+                <li><a class="dropdown-item" href="#" id="showInstructions">View Instructions</a></li>
+            </ul>
+        </div>
+
+          
+    </div>
+</nav>
+
+    <!-- Instruction Pane (Hidden by default) -->
+    <div class="container my-5 instruction-pane" id="instructionPane">
+        <div class="card p-4">
+            <h4 class="text-primary mb-3"><i class="fas fa-book"></i> How to Use QR File Sharing</h4>
+			<div class="instruction-item">
+			<strong>THIS APP ONLY WORKS IN LAN</strong>
+			</div>
+            
+            <div class="instruction-item">
+                <i class="fas fa-file-upload"></i>
+                <strong>Step 1:</strong> Drag and drop your file into the designated area or click the "Browse File" button to select a file. It's easy—just a simple drag or click!
+            </div>
+
+            <div class="instruction-item">
+                <i class="fas fa-qrcode"></i>
+                <strong>Step 2:</strong> Once the file is uploaded, a shiny new QR code will appear on your screen. This is your magic key to share the file.
+            </div>
+
+            <div class="instruction-item">
+                <i class="fas fa-mobile-alt"></i>
+                <strong>Step 3:</strong> You can scan the QR code with another device to instantly access the file. It’s quick and hassle-free!
+            </div>
+
+            <div class="instruction-item">
+                <i class="fas fa-download"></i>
+                <strong>Step 4:</strong> If you prefer downloading, simply click the "Download" button to save the file on your device.
+            </div>
+
+            <div class="instruction-item">
+                <i class="fas fa-link"></i>
+                <strong>Step 5:</strong> Want to share the link directly? No problem! Just click the "Copy Link" button, and it's ready to be pasted wherever you want.
+            </div>
+
+            <div class="instruction-item">
+                <i class="fas fa-history"></i>
+                <strong>Step 6:</strong> All uploaded files are neatly stored in the upload history for quick access anytime you need them.
+            </div>
+
+            <button class="btn btn-danger mt-3" id="closeInstructions"><i class="fas fa-times"></i> Close Instructions</button>
+        </div>
+    </div>
+    </div>
+
+    <!-- Custom Notification Section -->
+    <div id="notification" class="alert alert-info hidden" role="alert">
+        <span id="notificationMessage"></span>
+    </div>
+
+    <!-- Spinner Section -->
+    <div id="spinner" class="spinner-border text-primary hidden" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card p-4">
+                    <h3 class="card-title text-center">Upload and Share Files via QR Code</h3>
+                    <div id="dropArea" class="mt-4">
+                        <p><i class="fas fa-upload"></i> Drag and drop your file here</p>
+                        <p>or</p>
+                        <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                            <i class="fas fa-folder-open"></i> Browse File
+                        </button>
+                        <input type="file" id="fileInput" class="d-none">
+                    </div>
+					<!-- Modal for confirmation -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete the file "<span id="fileToDeleteName"></span>" from the upload history?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal for Enlarged QR Code -->
+<div class="modal fade" id="qrCodeModal" tabindex="-1" aria-labelledby="qrCodeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="qrCodeModalLabel">Enlarged QR Code</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="enlargedQrCode" src="" alt="Enlarged QR Code" class="img-fluid rounded mx-auto d-block">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                    
+                    <!-- File Metadata -->
+                    <div id="fileMetadata" class="mt-4 hidden">
+                        <p><strong>File Name:</strong> <span id="fileName"></span></p>
+                        <p><strong>File Size:</strong> <span id="fileSize"></span></p>
+                    </div>
+
+                     <!-- QR Code Display -->
+                    <div id="qrCodeSection" class="mt-4 text-center hidden">
+                        <h5>Your QR Code:</h5>
+                        <img id="qrCodeImage" src="" alt="QR Code" class="img-fluid rounded">
+                        <div class="mt-3">
+                            <a id="downloadLink" href="#" class="btn btn-success">
+                                <i class="fas fa-download"></i> Download File
+                            </a>
+                            <button id="shareQR" class="btn btn-secondary">
+                                <i class="fas fa-share-alt"></i> Copy Link
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Upload History -->
+                    <div id="uploadHistory" class="mt-5">
+                        <h5>Upload History</h5>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>File Name</th>
+                                    <th>QR Code</th>
+                                    <th>Download</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTable">
+                                <!-- Upload history populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center">
+        <div class="container">
+            <span>© 2024 QR File Sharing By Ahan Sardar</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript -->
+    <script>
+        const dropArea = document.getElementById("dropArea");
+        const fileInput = document.getElementById("fileInput");
+        const fileMetadata = document.getElementById("fileMetadata");
+        const fileName = document.getElementById("fileName");
+        const fileSize = document.getElementById("fileSize");
+        const qrCodeSection = document.getElementById("qrCodeSection");
+        const qrCodeImage = document.getElementById("qrCodeImage");
+        const downloadLink = document.getElementById("downloadLink");
+        const historyTable = document.getElementById("historyTable");
+		
+		// Reference to modal elements
+const deleteConfirmModal = new bootstrap.Modal(document.getElementById("deleteConfirmModal"));
+const fileToDeleteNameElement = document.getElementById("fileToDeleteName");
+const confirmDeleteButton = document.getElementById("confirmDeleteButton");
+let fileRowToDelete = null; // To keep track of the row to delete
+
+   // Function to show instructions when clicked
+        document.getElementById("showInstructions").addEventListener("click", function() {
+            document.getElementById("instructionPane").style.display = "block";
+        });
+
+        // Close instructions when clicked
+        document.getElementById("closeInstructions").addEventListener("click", function() {
+            document.getElementById("instructionPane").style.display = "none";
+        });
+        
+
+        // Show notification
+        function showNotification(message, type = "info") {
+            const notification = document.getElementById("notification");
+            notification.classList.remove("hidden");
+            notification.classList.add(`alert-${type}`);
+            document.getElementById("notificationMessage").textContent = message;
+
+            setTimeout(() => {
+                notification.classList.add("hidden");
+            }, 5000);
+        }
+
+        // Show spinner
+        function showSpinner() {
+            document.getElementById("spinner").classList.remove("hidden");
+            document.getElementById("spinner").style.display = "inline-block";
+        }
+
+        // Hide spinner
+        function hideSpinner() {
+            document.getElementById("spinner").classList.add("hidden");
+            document.getElementById("spinner").style.display = "none";
+        }
+
+        // Handle file upload with spinner and notifications
+        function uploadFile(file) {
+           
+
+          
+            const formData = new FormData();
+            formData.append("file", file);
+
+            showSpinner();
+            showNotification("Uploading file...", "info");
+
+            fetch("/upload", {
+                method: "POST",
+                body: formData,
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                hideSpinner();
+                if (data.qr_code) {
+                    document.getElementById("qrCodeImage").src = data.qr_code;
+                    document.getElementById("downloadLink").href = data.download_link;
+                    document.getElementById("qrCodeSection").classList.remove("hidden");
+                    addHistory(file.name, data.qr_code, data.download_link);
+                    saveHistoryToLocalStorage(file.name, data.qr_code, data.download_link);
+                    showNotification("File uploaded successfully!", "success");
+                } else {
+                    showNotification("Error: QR Code not generated.", "danger");
+                }
+            })
+            .catch((error) => {
+                hideSpinner();
+                showNotification("Error uploading file: " + error.message, "danger");
+            });
+        }
+
+        // Copy link functionality
+        document.getElementById("shareQR").addEventListener("click", () => {
+            const qrLink = document.getElementById("downloadLink").href;
+            copyToClipboard(qrLink);
+            showNotification("Link copied to clipboard!", "info");
+        });
+
+        // Copy text to clipboard
+        function copyToClipboard(text) {
+            const tempInput = document.createElement("input");
+            document.body.appendChild(tempInput);
+            tempInput.value = text;
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+        }
+
+   // Add file to history (modified to make QR code clickable)
+function addHistory(fileName, qrCodeUrl, downloadUrl) {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+                <td>${fileName}</td>
+                <td><img src="${qrCodeUrl}" alt="QR Code" class="img-thumbnail qr-code" width="50" data-qrcode="${qrCodeUrl}"></td>
+                <td><a href="${downloadUrl}" class="btn btn-sm btn-success">
+                    <i class="fas fa-download"></i> Download
+                </a></td>
+                <td><button class="btn btn-sm btn-danger" onclick="deleteHistoryRow(this)">
+                    <i class="fas fa-trash-alt"></i> Delete
+                </button></td>
+            `;
+    historyTable.appendChild(row);
+}
+
+// Add event listener to open QR code in modal when clicked
+document.addEventListener("click", (event) => {
+    if (event.target && event.target.classList.contains("qr-code")) {
+        const qrCodeUrl = event.target.getAttribute("data-qrcode");
+        const modalImage = document.getElementById("enlargedQrCode");
+        modalImage.src = qrCodeUrl;
+        
+        // Show the modal
+        const qrCodeModal = new bootstrap.Modal(document.getElementById("qrCodeModal"));
+        qrCodeModal.show();
+    }
+});
+
+
+// Modify deleteHistoryRow to trigger modal
+function deleteHistoryRow(button) {
+    // Get the file name from the row
+    const row = button.closest("tr");
+    const fileName = row.cells[0].textContent;
+
+    // Show the modal with the file name
+    fileToDeleteNameElement.textContent = fileName;
+    fileRowToDelete = row; // Store the row to delete when confirmed
+
+    // Show the modal
+    deleteConfirmModal.show();
+}
+// Function to replace spaces with underscores in file name
+function translateFileName(fileName) {
+    return fileName.replace(/ /g, '_');
+}
+
+// Confirm deletion
+document.getElementById("confirmDeleteButton").addEventListener("click", () => {
+    let fileName = fileRowToDelete.cells[0].textContent;
+
+    // Translate file name to replace spaces with underscores
+    fileName = translateFileName(fileName);
+
+    // Make a DELETE request to the server to delete the file
+    fetch(`/delete/${fileName}`, {
+        method: 'DELETE',
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.success) {
+            // Remove the row from the table
+            fileRowToDelete.remove();  
+
+            // Delete the file from localStorage
+            let history = JSON.parse(localStorage.getItem("uploadHistory")) || [];
+            history = history.filter(item => item.fileName !== fileName);  // Fix reference to fileName
+            localStorage.setItem("uploadHistory", JSON.stringify(history));
+
+            // Show notification
+            showNotification("Upload history deleted and file removed from the server.", "info");
+        } else {
+            showNotification("Error deleting file from the server.", "danger");
+        }
+    })
+    .catch((error) => {
+        showNotification("Error deleting file: " + error.message, "danger");
+    });
+
+    // Close the modal
+    const modal = bootstrap.Modal.getInstance(document.getElementById("deleteConfirmModal"));
+    modal.hide();
+});
+
+
+        // Save history to local storage
+        function saveHistoryToLocalStorage(fileName, qrCodeUrl, downloadUrl) {
+            let history = JSON.parse(localStorage.getItem("uploadHistory")) || [];
+            history.push({ fileName, qrCodeUrl, downloadUrl });
+            localStorage.setItem("uploadHistory", JSON.stringify(history));
+        }
+
+        // Load history from local storage
+        function loadHistoryFromLocalStorage() {
+            let history = JSON.parse(localStorage.getItem("uploadHistory")) || [];
+            history.forEach(item => {
+                addHistory(item.fileName, item.qrCodeUrl, item.downloadUrl);
+            });
+        }
+
+        // Drop zone functionality
+        dropArea.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            dropArea.classList.add("dragover");
+        });
+
+        dropArea.addEventListener("dragleave", () => {
+            dropArea.classList.remove("dragover");
+        });
+
+        dropArea.addEventListener("drop", (event) => {
+            event.preventDefault();
+            dropArea.classList.remove("dragover");
+            const file = event.dataTransfer.files[0];
+            if (file) {
+                uploadFile(file);
+            }
+        });
+
+        // File input change handler
+        fileInput.addEventListener("change", () => {
+            const file = fileInput.files[0];
+            if (file) {
+                uploadFile(file);
+            }
+        });
+
+        // Dark mode toggle
+        document.getElementById("darkModeToggle").addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+        });
+
+        // Initialize history
+        loadHistoryFromLocalStorage();
+    </script>
+</body>
+</html>
