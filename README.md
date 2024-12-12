@@ -2,6 +2,12 @@
 
 QR File Sharing is a simple web application for uploading files, generating unique QR codes, and sharing download links. It includes automatic file cleanup for old files and supports manual file deletion via API.
 
+## Collaborators
+
+[@ahansardar](https://github.com/ahansardar)
+[@Debarya1609](https://github.com/Debarya1609)
+[@coderahan](https://github.com/coderahan)
+
 ## Features
 
 - **File Upload**: Users can upload files which will be stored on the server.
