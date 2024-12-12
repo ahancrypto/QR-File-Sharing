@@ -125,3 +125,5 @@ File Deletion: Files can be deleted by sending a DELETE request to /delete/<file
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/ahansardar/QR-File-Sharing/blob/main/LICENSE) file for details.
 ![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)
 
+## UI 
+![image](https://github.com/user-attachments/assets/f79d8cae-61ef-46eb-a53a-8a7b2f423e35)
