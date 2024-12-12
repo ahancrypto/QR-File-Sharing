@@ -12,18 +12,30 @@ QR Scanner Web is a simple web application for uploading files, generating uniqu
 ## Project Structure
 
 QR Scanner Web/
+
 │
+
 ├── app/
+
 │   ├── static/
-│   │   ├── uploads/           # Folder for uploaded files
+
+│   │   ├── uploads/# Folder for uploaded files
+
 │   │   ├── app.png            # App logo
+
 │   │   └── favicon.png        # Favicon
+
 │   ├── templates/
+
 │   │   └── index.html         # Main HTML page
+
 │   ├── routes.py              # Flask route definitions
+
 │   └── __init__.py            # App initialization
+
 │
 ├── requirements.txt           # Project dependencies
+
 └── run.py                     # Entry point for the Flask app
 
 
@@ -59,7 +71,9 @@ The project requires the following Python libraries:
 Install all dependencies with:
 ```bash
 pip install -r requirements.txt
-API Endpoints
+```
+## API Endpoints
+
 GET /
 Displays the main page where users can upload files.
 
