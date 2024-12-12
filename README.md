@@ -112,9 +112,7 @@ File Cleanup: The background scheduler automatically runs the cleanup every day,
 Manual Cleanup: You can manually trigger the cleanup by sending a POST request to /cleanup.
 File Deletion: Files can be deleted by sending a DELETE request to /delete/<filename>.
 
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
+## License
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/ahansardar/QR-File-Sharing/blob/main/LICENSE) file for details.
 ![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-
-This README provides clear instructions, details about the features, API endpoints, and setup fo
