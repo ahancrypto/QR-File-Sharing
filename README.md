@@ -82,6 +82,7 @@ Uploads a file and generates a QR code with the download link.
 
 Request:
 Multipart form data with a file field.
+
 Response:
 JSON with a success message, download link, and QR code image URL.
 GET /download/<filename>
@@ -89,6 +90,7 @@ Downloads a file by its filename.
 
 Request:
 Provide the filename in the URL.
+
 Response:
 The file is served for download.
 POST /cleanup
@@ -96,6 +98,7 @@ Triggers manual file cleanup. Deletes files older than 7 days.
 
 Request:
 POST request with no body.
+
 Response:
 JSON confirming the cleanup execution.
 DELETE /delete/<filename>
@@ -103,6 +106,7 @@ Deletes a specific file and its corresponding QR code.
 
 Request:
 DELETE request with the filename in the URL.
+
 Response:
 JSON confirming whether the file was deleted successfully or not.
 
