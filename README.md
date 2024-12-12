@@ -10,33 +10,33 @@ QR File Sharing is a simple web application for uploading files, generating uniq
 - **Manual File Deletion**: Users can delete specific files via an API endpoint.
 
 ## Project Structure
+```mermaid
+graph TD;
+    A[**QR-Scanner-Web**] --> B[**app**]
+    B --> C[**static**]
+    C --> D[**uploads**
+*Stores uploaded files*] 
+    C --> E[**app.png**
+ *App logo image*] 
+    C --> F[**favicon.png**
+ *Favicon for the app*] 
+    
+    B --> G[**templates**]
+    G --> H[**index.html**
+ *Main HTML page for the app*]  
+    
+    B --> I[**__init__.py**
+*Flask app initialization and config setup*]  
+    B --> J[**routes.py**
+*Defines all routes for file management and cleanup operations*] 
+    
+    A --> K[**requirements.txt**
+*Lists all required Python packages*]  
+    A --> L[**run.py**
+ *Main entry point to start the Flask app*] 
 
-QR Scanner Web/
+```
 
-│
-
-├── app/
-
-│   ├── static/
-
-│   │   ├── uploads/# Folder for uploaded files
-
-│   │   ├── app.png            # App logo
-
-│   │   └── favicon.png        # Favicon
-
-│   ├── templates/
-
-│   │   └── index.html         # Main HTML page
-
-│   ├── routes.py              # Flask route definitions
-
-│   └── __init__.py            # App initialization
-
-│
-├── requirements.txt           # Project dependencies
-
-└── run.py                     # Entry point for the Flask app
 
 
 ## Installation
