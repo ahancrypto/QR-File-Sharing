@@ -6,7 +6,6 @@ QR File Sharing is a simple web application for uploading files, generating uniq
 
 [@ahansardar](https://github.com/ahansardar)
 
-[@Debarya1609](https://github.com/Debarya1609)
 
 [@coderahan](https://github.com/coderahan)
 
